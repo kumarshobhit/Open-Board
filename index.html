@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Board</title>
+</head>
+
+<body>
+    <h1>Canvas example</h1>
+    <!-- drawing board -->
+    <canvas></canvas>
+</body>
+<!-- html is inject -->
+<!-- script -->
+<script>
+    let canvasBoard = document.querySelector("canvas")
+    // default height width is smaller
+    canvasBoard.height = window.innerHeight
+    canvasBoard.width = window.innerWidth
+    // this line gives you tool to draw that on canvas
+    let tool = canvasBoard.getContext("2d")
+    // rectangle build
+    tool.fillRect(0, 0, 200, 200)
+</script>
+
+</html>
