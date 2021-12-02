@@ -6,24 +6,107 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Board</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        .fas {
+            font-size: 2rem;
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <h1>Canvas example</h1>
+    <!-- <h1>Canvas example</h1> -->
     <!-- drawing board -->
+    <i class="fas fa-square"></i>
+    <i class="fas fa-grip-lines-vertical"></i>
     <canvas></canvas>
 </body>
 <!-- html is inject -->
 <!-- script -->
 <script>
     let canvasBoard = document.querySelector("canvas")
+    let body = document.querySelector("body")
+    let rectTool = document.querySelector(".fa-square")
+    let lineTool = document.querySelector(".fa-grip-lines-vertical")
+    let cTool = "rectTool"
     // default height width is smaller
-    canvasBoard.height = window.innerHeight
-    canvasBoard.width = window.innerWidth
+    canvasBoard.height = window.innerHeight // 500  ? 
+    canvasBoard.width = window.innerWidth   // 600
     // this line gives you tool to draw that on canvas
     let tool = canvasBoard.getContext("2d")
-    // rectangle build
-    tool.fillRect(0, 0, 200, 200)
+    // press on the screen
+
+    // tool change logic
+    rectTool.addEventListener("click", () => {
+        cTool = "rectTool"
+    })
+
+    lineTool.addEventListener("click", () => {
+        cTool = "lineTool"
+    })
+
+    // canvas board-> top point kitna neeche hain
+    let boardTop = canvasBoard.getBoundingClientRect().top
+    // canvas board-> left point kitna aage hain
+    let boardLeft = canvasBoard.getBoundingClientRect().left
+
+    console.log(boardTop, boardLeft)
+
+    let iX, iY, fX, fY
+
+    body.addEventListener("mousedown", function (e) {
+        // console.log(e)
+        let xpos = e.clientX
+        let ypos = e.clientY - boardTop
+        iX = xpos
+        iY = ypos
+    })
+
+    body.addEventListener("mouseup", function (e) {
+        let xpos = e.clientX
+        let ypos = e.clientY
+        fX = xpos
+        fY = ypos - boardTop
+
+        let width = fX - iX
+        let height = fY - iY
+
+        if (cTool == "rectTool") {
+            tool.strokeRect(iX, iY, width, height)
+        }
+        else {
+            tool.beginPath()
+            tool.moveTo(iX, iY)
+            tool.lineTo(fX, fY)
+            tool.stroke()
+            console.log("pencil tool")
+        }
+    })
 </script>
 
 </html>
+
+<!-- drawing a line -->
+<!-- four functions -->
+<!-- 1.beginpath-starting path of drawing 
+2.moveto-moves to a point without drawing   
+3.lineto-draws a line from prev point to current point
+4.stroke produces the effect of moveto and lineto
+for rendering the ui -->
+
+<!-- // rectangle build
+// starting x,starting y, width and height
+tool.fillStyle = 'green'
+tool.fillRect(10, 30, 200, 200)
+// boundaries draw
+tool.strokeStyle = 'red'
+tool.strokeRect(50, 50, 200, 200)
+tool.fillStyle = 'blue'
+tool.fillRect(40, 40, 100, 100)
+// layers are created-stacked on top of one another -->
