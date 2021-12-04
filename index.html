@@ -16,6 +16,36 @@
             margin-right: 30px;
             margin-left: 30px;
         }
+
+        .icon-pallet {
+            height: 50px;
+            background-color: lightgray;
+            width: 800px;
+            margin-left: 100px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .red {
+            background-color: lightpink;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .green {
+            background-color: green;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .blue {
+            background-color: lightblue;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,8 +53,14 @@
 <body>
     <!-- <h1>Canvas example</h1> -->
     <!-- drawing board -->
-    <i class="fas fa-square"></i>
-    <i class="fas fa-grip-lines-vertical"></i>
+
+    <div class="icon-pallet">
+        <i class="fas fa-square"></i>
+        <i class="fas fa-grip-lines-vertical"></i>
+        <div class="red"></div>
+        <div class="green"></div>
+        <div class="blue"></div>
+    </div>
     <canvas></canvas>
 </body>
 <!-- html is inject -->
@@ -40,6 +76,23 @@
     canvasBoard.width = window.innerWidth   // 600
     // this line gives you tool to draw that on canvas
     let tool = canvasBoard.getContext("2d")
+
+
+    let redButton = document.querySelector('.red')
+    let greenButton = document.querySelector('.green')
+    let blueButton = document.querySelector('.blue')
+
+    redButton.addEventListener('click', () => {
+        tool.strokeStyle = "lightpink"
+    })
+
+    greenButton.addEventListener('click', () => {
+        tool.strokeStyle = "green"
+    })
+
+    blueButton.addEventListener('click', () => {
+        tool.strokeStyle = "lightblue"
+    })
     // press on the screen
 
     // tool change logic
@@ -59,6 +112,7 @@
     console.log(boardTop, boardLeft)
 
     let iX, iY, fX, fY
+    let drawingMode = false
 
     body.addEventListener("mousedown", function (e) {
         // console.log(e)
@@ -66,6 +120,7 @@
         let ypos = e.clientY - boardTop
         iX = xpos
         iY = ypos
+        drawingMode = true
     })
 
     body.addEventListener("mouseup", function (e) {
@@ -87,6 +142,19 @@
             tool.stroke()
             console.log("pencil tool")
         }
+        drawingMode = false
+    })
+
+    body.addEventListener("mousemove", function (e) {
+        if (drawingMode == false) return
+        fX = e.clientX
+        fY = e.clientY - boardTop
+        tool.beginPath();
+        tool.moveTo(iX, iY)
+        tool.lineTo(fX, fY)
+        tool.stroke()
+        iX = fX
+        iY = fY
     })
 </script>
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        div {
+            border: 1px solid green;
+        }
+
+        .outer {
+            border: 3px solid purple;
+            width: 200px;
+            height: 50px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .red {
+            background-color: lightpink;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .green {
+            background-color: green;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .blue {
+            background-color: lightblue;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .color-area {
+            border: 1px solid grey;
+            height: 100px;
+            width: 100px;
+            margin-top: 30px;
+            margin-left: 30px;
+        }
+    </style>
+    <title>Color</title>
+</head>
+
+<body>
+    <!-- elements->-height->content -->
+    <!-- div-> width -> 100% -->
+    <div class="outer">
+        <div class="red"></div>
+        <div class="green"></div>
+        <div class="blue"></div>
+    </div>
+    <!-- color area -->
+    <div class="color-area"></div>
+</body>
+<script>
+    // button-> click-> color
+    let redButton = document.querySelector('.red')
+    let greenButton = document.querySelector('.green')
+    let blueButton = document.querySelector('.blue')
+
+    redButton.addEventListener('click', () => {
+        colorArea.style.background = "lightpink"
+    })
+
+    greenButton.addEventListener('click', () => {
+        colorArea.style.background = "green"
+    })
+
+    blueButton.addEventListener('click', () => {
+        colorArea.style.background = "lightblue"
+    })
+    let colorArea = document.querySelector('.color-area')
+</script>
+
+</html>
